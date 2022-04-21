@@ -129,5 +129,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-
-.env
+# my additions
+.DS_Store
