@@ -1,0 +1,33 @@
+{
+  "name": "ratings",
+  "version": "1.0.0",
+  "description": "An API constructed as part of the Ratings &amp; Review component for Project Atlier at Hack Reactor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server-dev": "npx nodemon --watch server server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fox-sdc/Ratings-Review-API.git"
+  },
+  "author": "alex_cannon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fox-sdc/Ratings-Review-API/issues"
+  },
+  "homepage": "https://github.com/fox-sdc/Ratings-Review-API#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.3.0",
+    "postgres": "^3.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.15"
+  },
+  "type": "module"
+}
