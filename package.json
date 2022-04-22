@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server-dev": "npx nodemon --watch server server/index.js",
+    "server-dev": "npx nodemon --watch server server/app.js",
     "build-data": "psql -d ratings -f db/test.sql && psql -d ratings -f db/local_loader.sql && psql -d ratings -f db/data_transformer.sql"
   },
   "repository": {
@@ -26,9 +26,10 @@
   },
   "devDependencies": {
     "eslint": "^8.13.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.15"
   },
-  "type": "module"
+  "type": "commonjs"
 }
