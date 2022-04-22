@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server-dev": "npx nodemon --watch server server/index.js"
+    "server-dev": "npx nodemon --watch server server/index.js",
+    "build-data": "psql -d ratings -f db/test.sql && psql -d ratings -f db/local_loader.sql && psql -d ratings -f db/data_transformer.sql"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mongoose": "^6.3.0",
-    "postgres": "^3.0.6"
+    "pg": "^8.7.3"
   },
   "devDependencies": {
     "eslint": "^8.13.0",
