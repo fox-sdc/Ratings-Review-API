@@ -10,7 +10,7 @@ LIMIT 5;
 const queryTest = pool
   .query(queryString)
   .then((res) => {
-    console.log(res);
+    console.log('query HERE');
   })
   .catch((err) => {
     console.log(err);
