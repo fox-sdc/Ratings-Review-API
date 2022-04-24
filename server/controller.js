@@ -29,6 +29,13 @@ router.get('/', async (req, res) => {
       count: newCount,
       results: resultsArr,
     };
+    for (let i = 0; i < output.results.length; i += 1) {
+      const utcSeconds = (output.results[i].date).toString();
+      const d = new Date();
+      console.log(d);
+      d.toISOString(utcSeconds);
+      output.results[i].date = d;
+    }
     res.status(200).send(output);
   } catch (err) {
     res.status(500).send(err);
