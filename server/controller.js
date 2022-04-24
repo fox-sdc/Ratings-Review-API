@@ -45,7 +45,6 @@ router.get('/', async (req, res) => {
 router.get('/meta', async (req, res) => {
   try {
     const { product_id } = req.query;
-    console.log(product_id);
     const { rows } = await db.getMetaData(product_id);
     const { ratings, recommended, characteristics } = rows[0];
     const output = {
@@ -65,7 +64,13 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:review_id/helpful', async (req, res) => {
-
+  try {
+    const { review_id } = req.params;
+    await db.markReviewHelpful(review_id);
+    res.status(204).send('nice');
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 router.put('/:review_id/report', async (req, res) => {

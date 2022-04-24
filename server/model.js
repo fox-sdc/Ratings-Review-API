@@ -110,4 +110,19 @@ module.exports = {
         `;
     return pool.query(query);
   },
+
+  markReviewHelpful(review_id) {
+    const query = {
+      name: 'incease-review-helpfulness',
+      text: '',
+      values: [],
+    };
+    query.values = [review_id];
+    query.text = `
+      UPDATE reviews
+      SET helpfulness = (helpfulness + 1)
+      WHERE review_id = $1;
+    `;
+    return pool.query(query);
+  },
 };
