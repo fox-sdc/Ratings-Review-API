@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server-dev": "npx nodemon --watch server server/app.js",
+    "server-dev": "npx nodemon --watch server server/index.js",
     "build-data": "psql -d ratings -f db/test.sql && psql -d ratings -f db/local_loader.sql && psql -d ratings -f db/data_transformer.sql"
   },
   "repository": {
@@ -21,6 +21,7 @@
   "dependencies": {
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-promise-router": "^4.1.1",
     "mongoose": "^6.3.0",
     "pg": "^8.7.3"
   },
