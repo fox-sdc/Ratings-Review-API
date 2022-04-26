@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 const Router = require('express-promise-router');
 const db = require('./model');
@@ -32,7 +34,6 @@ router.get('/', async (req, res) => {
     for (let i = 0; i < output.results.length; i += 1) {
       const utcSeconds = (output.results[i].date).toString();
       const d = new Date();
-      console.log(d);
       d.toISOString(utcSeconds);
       output.results[i].date = d;
     }
@@ -60,21 +61,48 @@ router.get('/meta', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  const {
+    product_id,
+    rating,
+    summary,
+    body,
+    photos,
+    characteristics,
+    recommend,
+  } = req.body;
+  const reviewer_name = req.body.name;
+  const reviewer_email = req.body.email;
+  const date = Date.now();
 
+  try {
+    await db.createMetaReview(product_id, rating, recommend);
+    await db.createCharReview(characteristics);
+    const { rows } = await db.createMainReview(product_id, rating, summary, body, date, reviewer_name, reviewer_email, recommend);
+    await db.createPhotosReview(rows[0].review_id, photos);
+    res.status(201).send('Created');
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 router.put('/:review_id/helpful', async (req, res) => {
   try {
     const { review_id } = req.params;
     await db.markReviewHelpful(review_id);
-    res.status(204).send('nice');
+    res.sendStatus(204);
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
 router.put('/:review_id/report', async (req, res) => {
-
+  try {
+    const { review_id } = req.params;
+    await db.reportReview(review_id);
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 module.exports = router;
