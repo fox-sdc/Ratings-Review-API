@@ -13,9 +13,20 @@ const pool = new Pool({
 });
 
 module.exports = {
-  async query(text, params) {
-    const res = await pool.query(text, params);
-    return res;
+  metaQuery(product_id) {
+    const query = {
+      name: 'get-meta',
+      text: '',
+      values: [],
+    };
+    query.values = [product_id];
+    query.text = `
+      SELECT * FROM meta, join_characteristic_votes, characteristics
+      WHERE meta.product_id = $1
+      AND join_characteristic_votes.product_id = $1
+      AND join_characteristic_votes.characteristic_id=characteristics.characteristics_id
+    `;
+    return pool.query(query);
   },
 
   getAllReviews(product_id, sort) {
@@ -54,64 +65,6 @@ module.exports = {
           WHERE product_id=$1
           GROUP BY r.review_id
           ORDER BY ${sort} DESC;
-        `;
-    return pool.query(query);
-  },
-
-  getMetaData(product_id) {
-    const query = {
-      name: 'get-meta-data',
-      text: '',
-      values: [],
-    };
-    query.values = [product_id];
-    query.text = `
-      SELECT
-        (SELECT meta
-          FROM (
-            SELECT
-                JSON_BUILD_OBJECT(
-                  '1', meta.rating_1,
-                  '2', meta.rating_2,
-                  '3', meta.rating_3,
-                  '4', meta.rating_4,
-                  '5', meta.rating_5
-                ) AS meta
-              FROM meta
-              WHERE meta.product_id = $1
-            ) AS meta
-          ) ratings,
-
-          (SELECT meta
-            FROM (
-              SELECT
-                  JSON_BUILD_OBJECT(
-                    'false', meta.recommended_false_vote,
-                    'true', meta.recommended_true_vote
-                  ) AS meta
-                FROM meta
-                WHERE meta.product_id = $1
-              ) AS meta
-            ) AS recommended,
-
-            (SELECT *
-            FROM (
-              SELECT
-                JSON_OBJECT_AGG((characteristics.characteristic_name),
-                  JSON_BUILD_OBJECT(
-                    'id', join_characteristic_votes.char_join_id,
-                    'value', join_characteristic_votes.total_score::decimal / join_characteristic_votes.total_votes
-                  )
-                ) AS test1
-              FROM join_characteristic_votes
-              JOIN characteristics ON (join_characteristic_votes.characteristic_id = characteristics.characteristics_id)
-              WHERE join_characteristic_votes.product_id = $1
-              ) AS test2
-            ) AS characteristics
-            FROM join_characteristic_votes
-            JOIN characteristics ON (join_characteristic_votes.characteristic_id = characteristics.characteristics_id)
-            GROUP BY characteristic_id
-          ;
         `;
     return pool.query(query);
   },
