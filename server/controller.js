@@ -78,7 +78,9 @@ router.post('/', async (req, res) => {
     await db.createMetaReview(product_id, rating, recommend);
     await db.createCharReview(characteristics);
     const { rows } = await db.createMainReview(product_id, rating, summary, body, date, reviewer_name, reviewer_email, recommend);
-    await db.createPhotosReview(rows[0].review_id, photos);
+    if (photos.length > 0) {
+      await db.createPhotosReview(rows[0].review_id, photos);
+    }
     res.status(201).send('Created');
   } catch (err) {
     res.status(500).send(err);

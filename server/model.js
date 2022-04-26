@@ -188,15 +188,13 @@ module.exports = {
       stringPhotos += `'${photos[i]}'`;
       stringPhotos += ',';
     }
-    if (photos.length > 0) {
-      stringPhotos += `'${photos[photos.length - 1]}'`;
-      stringPhotos += ']';
-    }
+    stringPhotos += `'${photos[photos.length - 1]}'`;
+    stringPhotos += ']';
     query.text = `
       DO $do$
         DECLARE
-          array_urls text[]:= ARRAY ${stringPhotos};
-          u varchar;
+          array_urls TEXT[]:= ARRAY ${stringPhotos};
+          u VARCHAR;
         BEGIN
           FOREACH u IN ARRAY array_urls
           LOOP
@@ -221,8 +219,8 @@ module.exports = {
     query.text = `
       DO $do$
         DECLARE
-          array_chars int[]:= array[${charQueries}];
-          i int[];
+          array_chars INT[]:= array[${charQueries}];
+          i INT[];
         BEGIN
           FOREACH i SLICE 1 IN ARRAY array_chars
           LOOP

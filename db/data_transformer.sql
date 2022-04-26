@@ -101,8 +101,8 @@ WHERE Meta.product_id=c.product_id;
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('"reviews"', 'review_id')), (SELECT (MAX("review_id") + 1) FROM "reviews"), FALSE);
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('"photos"', 'photo_id')), (SELECT (MAX("photo_id") + 1) FROM "photos"), FALSE);
 
+-- Indexing for faster queries
+
 CREATE INDEX reviews_product_id ON reviews (product_id);
-
 CREATE INDEX photos_review_id ON photos (review_id);
-
 CREATE INDEX join_characteristic_votes_product_id ON join_characteristic_votes (product_id);
