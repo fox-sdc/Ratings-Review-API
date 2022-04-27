@@ -7,7 +7,6 @@ const db = require('./model');
 const router = new Router();
 
 router.get('/', async (req, res) => {
-  console.log(req.query);
   try {
     let {
       product_id,

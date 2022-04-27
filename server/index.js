@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/extensions
 const app = require('./app.js');
 require('dotenv').config();
 
