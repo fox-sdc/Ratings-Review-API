@@ -4,9 +4,10 @@
   "description": "An API constructed as part of the Ratings &amp; Review component for Project Atlier at Hack Reactor",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "server-dev": "npx nodemon --watch server server/index.js",
-    "build-data": "psql -d ratings -f db/test.sql && psql -d ratings -f db/local_loader.sql && psql -d ratings -f db/data_transformer.sql"
+    "build-data": "psql -d ratings -f db/test.sql && psql -d ratings -f db/local_loader.sql && psql -d ratings -f db/data_transformer.sql",
+    "load-test": "k6 run /Users/alexc/HackReactor/SeniorPhase/Ratings-Review-API/testing/load-test.js"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,9 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.15"
+    "jest": "^28.0.2",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.3"
   },
   "type": "commonjs"
 }

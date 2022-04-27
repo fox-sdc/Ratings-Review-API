@@ -1,5 +1,7 @@
+/* eslint-disable import/no-unresolved */
 import http from 'k6/http';
 import { sleep, check } from 'k6';
+// eslint-disable-next-line import/extensions
 import { URLSearchParams } from 'https://jslib.k6.io/url/1.0.0/index.js';
 
 export const options = {
