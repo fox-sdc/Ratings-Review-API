@@ -85,6 +85,7 @@ router.get('/meta', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  // console.log(req.body);
   const {
     product_id,
     rating,
@@ -107,6 +108,7 @@ router.post('/', async (req, res) => {
     }
     res.status(201).send('Created');
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });
