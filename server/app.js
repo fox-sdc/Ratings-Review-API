@@ -1,10 +1,9 @@
-import express from 'express';
+const express = require('express');
+const routes = require('./controller');
 
 const app = express();
+app.use(express.json());
 
-// eslint-disable-next-line no-unused-vars
-app.get('/', (req, res) => {
-  res.send('Hello world');
-});
+app.use('/reviews', routes);
 
-export default app;
+module.exports = app;
