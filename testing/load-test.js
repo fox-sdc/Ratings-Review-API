@@ -5,21 +5,31 @@ import { sleep, check } from 'k6';
 import { URLSearchParams } from 'https://jslib.k6.io/url/1.0.0/index.js';
 
 export const options = {
-  vus: 40,
-  duration: '30s',
+  vus: 1,
+  stages: [
+    { duration: '15s', target: 20 },
+    { duration: '15', target: 40 },
+    { duration: '15s', target: 70 },
+    { duration: '15s', target: 100 },
+    { duration: '15s', target: 120 },
+    { duration: '15s', target: 150 },
+    { duration: '15s', target: 200 },
+    { duration: '45s', target: 300 },
+    { duration: '45s', target: 400 },
+  ],
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    http_req_duration: ['p(95)<50'], // 95% of requests should be below 200ms
+    http_req_duration: ['p(95)<70'], // 95% of requests should be below 50ms
   },
 };
 
 export default () => {
   const BASE_URL = 'http://localhost:3000/reviews';
-  const PRODUCT_ID = 65666;
-  const REVIEW_ID = 378809;
+  const randomProductId = Math.floor(Math.random() * 1000000) + 900000;
+  const REVIEW_ID = Math.floor(Math.random() * 1000000) + 900000;
 
   const searchParams = new URLSearchParams([
-    ['product_id', `${PRODUCT_ID}`],
+    ['product_id', `${randomProductId}`],
   ]);
 
   const req1 = {
@@ -50,21 +60,17 @@ export default () => {
   check(res[0], {
     'GET reviews request is status 200': (r) => r.status === 200,
   });
-
   check(res[1], {
     'GET meta request is status 200': (r) => r.status === 200,
   });
-
   check(res[2], {
     'PUT helpful request is status 204': (r) => r.status === 204,
   });
-
   check(res[3], {
     'PUT report request is status 204': (r) => r.status === 204,
   });
   sleep(1);
 };
-
 // Possible load testing for POST request but not used
 
 // const payload = {

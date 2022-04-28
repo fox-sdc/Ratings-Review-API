@@ -85,7 +85,6 @@ router.get('/meta', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // console.log(req.body);
   const {
     product_id,
     rating,
