@@ -4,7 +4,7 @@
   "description": "An API constructed as part of the Ratings &amp; Review component for Project Atlier at Hack Reactor",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "server-dev": "npx nodemon --watch server server/index.js",
     "build-data": "psql -d ratings -f db/test.sql && psql -d ratings -f db/local_loader.sql && psql -d ratings -f db/data_transformer.sql",
     "load-test": "k6 run /Users/alexc/HackReactor/SeniorPhase/Ratings-Review-API/testing/load-test.js"
